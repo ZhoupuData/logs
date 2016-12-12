@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="OFF">
+	<Appenders>
+		<Console name="CONSOLE" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
+<!-- 			<PatternLayout pattern="%m%n" /> -->
+		</Console>
+		
+		<RollingRandomAccessFile name="LOGFILE" fileName="log/log.log"
+			filePattern="log/log.log-%d{MM-dd-yyyy}-%i.log.gz">
+			<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100MB" />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+		</RollingRandomAccessFile>
+		
+         <Async name="ASYNC">
+			<AppenderRef ref="CONSOLE" />
+<!-- 			<AppenderRef ref="LOGFILE" /> -->
+		</Async>
+
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="ASYNC" />
+		</Root>
+		<Logger name="com.zhoupu.zplogsbatch" level="info" additivity="false">
+			<AppenderRef ref="ASYNC" />
+		</Logger>
+
+		<Logger name="org.apache.kafka" level="INFO" />
+		<!-- 只需要开启application.properties中的日志级别 -->
+<!-- 		<Logger name="org.springframework.data" level="DEBUG" /> -->
+
+	</Loggers>
+</Configuration>
